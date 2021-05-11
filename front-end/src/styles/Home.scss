@@ -1,0 +1,375 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    animation: gradient 6s ease alternate infinite;
+    background: linear-gradient(-45deg, #65a0fa, #0058fc, #23a6d5, #23d5ab) no-repeat;
+    background-size: 300% 300%;
+    font-family: Nunito, sans-serif;
+    justify-content: center;
+    color: white;
+    font-size: 200%;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+    background-attachment: fixed;
+}
+
+
+@keyframes gradient {
+    from {
+        background-position: 0 50%;
+    }
+    to {
+        background-position: 100% 50%;
+    }
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.21);
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+    z-index: 2;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 4px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 800px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.l-main {
+    display: flex;
+    height: 100vh;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    transition: margin-left .5s;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.content1 {
+    padding-top: 200px;
+    text-align: center;
+}
+
+@keyframes has-shown {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.has-shown {
+    animation: has-shown 2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+}
+
+.c-button {
+    background-color: rgb(255, 72, 72);
+    color: white;
+    width: 200px;
+    height: 70px;
+    font-size: 80%;
+    font-family: Nunito;
+    -webkit-box-shadow: 4px 4px 9px 1px rgba(0, 0, 0, 0.21);
+    box-shadow: 4px 4px 9px 1px rgba(0, 0, 0, 0.21);
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    opacity: 0;
+    animation-delay: 235ms;
+    margin-top: 30px;
+}
+
+.c-button::before {
+    border: rgb(255, 72, 72) solid 9px;
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.c-button:hover::before {
+    animation: is-rippling 1.75s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+}
+
+.c-button:focus::before {
+    animation: is-rippling 1.75s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+}
+
+.c-button:active {
+    border: none;
+    transform: translateY(2px);
+}
+
+.c-button:active::before {
+    animation: none;
+    transform: translateY(2px);
+}
+
+button:focus {
+    outline: 0;
+}
+
+@keyframes is-rippling {
+    to {
+        opacity: 0;
+        transform: scale(1.15, 1.5);
+    }
+}
+
+.btnmenu {
+    fill: white;
+    width: 64px;
+    height: 64px;
+    background: url("https://img.icons8.com/material-rounded/48/ffffff/menu--v1.png") no-repeat center;
+    padding: 10px;
+    margin-right: 95%;
+    transition: opacity .35s ease .25s;
+    position: fixed;
+    z-index: 2;
+}
+
+.btnmenu:hover {
+    cursor: pointer;
+}
+
+.flecha {
+    animation: is-bouncing 1s ease-in alternate infinite;
+    height: 40px;
+    position: absolute;
+    left: 50%;
+    bottom: 50px;
+    margin-left: -30px;
+    fill: white;
+    enable-background:new 0 0 491.996 491.996;
+}
+
+.flecha2 {
+    animation: is-bouncing 1s ease-in alternate infinite;
+    height: 40px;
+    position: absolute;
+    left: 50%;
+    bottom: 50px;
+    margin-left: -30px;
+    fill: white;
+    z-index: 2;
+}
+
+.flecha:hover, .flecha2:hover {
+    cursor: pointer;
+}
+
+@keyframes is-bouncing {
+    to {
+        transform: translateY(30px);
+    }
+}
+
+.sec-2 {
+    height: 100vh;
+    /*background-color: rgb(162, 207, 252);*/
+    background-image: url("https://blog.hopecontabil.com/wp-content/uploads/2020/07/configuracao-pc-escritorio.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.fundo-azul {
+    height: 100%;
+    position: relative;
+    /*background: linear-gradient(-45deg, #be3c3c, #ff0000, #ffd1d1, #ffffff) no-repeat;*/
+    /*background: rgba(99, 253, 220, 0.384);*/
+    background: #0058fc46;
+    width: 100%;
+    z-index: 1;
+    margin: 0;
+    animation: gradient 10s ease alternate infinite;
+    background-size: 300% 300%;
+}
+
+.titulo2 {
+    padding-top: 50px;
+    display: grid;
+    place-items: center;
+    z-index: 2;
+}
+
+.sobre {
+    position: absolute;
+    bottom: 250px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border: none;
+    vertical-align: middle;
+    border-radius: 0 15px 15px 0;
+    width: 30%;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.267);
+    margin: 50px 50px 50px 0;
+    color: rgb(225, 238, 255);
+    padding: 50px 50px 50px 100px;
+    float: right;
+    text-align: justify;
+    z-index: 2;
+    box-shadow: 4px 5px 9px 0px rgba(0, 0, 0, 0.14);
+    -webkit-box-shadow: 4px 5px 9px 0px rgba(0, 0, 0, 0.14);
+    -moz-box-shadow: 4px 5px 9px 0px rgba(0, 0, 0, 0.14);
+}
+
+.sobre-2 {
+    position: absolute;
+    bottom: 100px;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border: none;
+    vertical-align: middle;
+    border-radius: 15px 0 0 15px;
+    width: 30%;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.267);
+    margin: 50px 0 50px 50px;
+    color: rgb(225, 238, 255);
+    padding: 50px 100px 50px 50px;
+    float: right;
+    text-align: justify;
+    z-index: 2;
+    box-shadow: -4px 5px 9px 0px rgba(0, 0, 0, 0.14);
+    -webkit-box-shadow: -4px 5px 9px 0px rgba(0, 0, 0, 0.14);
+    -moz-box-shadow: -4px 5px 9px 0px rgba(0, 0, 0, 0.14);
+}
+
+.sec-3 {
+    height: 100vh;
+    /*background-color: rgb(162, 207, 252);*/
+    background-image: url("https://s2.glbimg.com/8rng1sV5afk_6WZRli1PKTvoy7w=/0x0:1500x1000/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2019/n/R/kdN4P7SNuOq8mq7CUo8Q/techtudo-banner.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.titulo3 {
+    padding-top: 50px;
+    display: grid;
+    place-items: center;
+    z-index: 2;
+}
+
+.nomes {
+    position: relative;
+    display: flex;
+    top: 45%;
+    justify-content: center;
+    flex-direction: column;
+    border: none;
+    vertical-align: middle;
+    border-radius: 15px;
+    width: 30%;
+    height: 200px;
+    background-color: rgba(255, 255, 255, 0.267);
+    margin: auto;
+    color: rgb(225, 238, 255);
+    padding: 50px;
+    text-align: justify;
+    z-index: 2;
+    box-shadow: 4px 5px 9px 0px rgba(0, 0, 0, 0.14);
+    -webkit-box-shadow: 4px 5px 9px 0px rgba(0, 0, 0, 0.14);
+    -moz-box-shadow: 4px 5px 9px 0px rgba(0, 0, 0, 0.14);
+}
+
+.rodape {
+    display: flex;
+    left: 0;
+    bottom: 0;
+    margin: 10px;
+    position: absolute;
+    font-size: 20px;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 100vh;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #909090;
+    border-radius: 5px;
+    height: 10px;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #606060;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    background-color: rgb(197, 197, 197)
+}

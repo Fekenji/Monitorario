@@ -1,7 +1,7 @@
-import { RepositoryList } from './components/RepositoryList';
-
-import './styles/global.scss';
+import { Home } from './components/Home';
 
 export function App() {
-    return <RepositoryList />;
+    return (
+        <Home />
+    );
 }
