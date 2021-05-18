@@ -1,7 +1,15 @@
-import { Home } from './components/Home';
+import { BrowserRouter } from 'react-router-dom';
+
+import Rotas from './Rotas';
+import Home from './components/Home';
 
 export function App() {
     return (
-        <Home />
+        <BrowserRouter>
+            <div>
+                <Home />
+                <Rotas />
+            </div>
+        </BrowserRouter>
     );
 }

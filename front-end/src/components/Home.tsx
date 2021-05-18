@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import '../styles/aos.scss';
 import '../styles/Home.scss';
 
@@ -5,7 +7,7 @@ import aos from '../scripts/aos';
 
 import simbolo from '../../public/simbolo.png';
 
-export function Home() {
+export default function Home() {
     return (
         <>
             <main className="l-main" id="sec-1" onLoad={aos.init}>
@@ -14,9 +16,11 @@ export function Home() {
                     <h1 className="c-main-title has-shown">
                         Monitorário
                   </h1>
-                    <button className="c-button has-shown">
-                        Entrar
-                  </button>
+                    <Link to="/login">
+                        <button className="c-button has-shown">
+                            Entrar
+                        </button>
+                    </Link>
                     <a href="#sec-2">
                         <svg version="1.1" className="flecha" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 491.996 491.996">
                             <path d="M484.132,124.986l-16.116-16.228c-5.072-5.068-11.82-7.86-19.032-7.86c-7.208,0-13.964,2.792-19.036,7.86l-183.84,183.848
