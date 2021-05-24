@@ -1,0 +1,124 @@
+@import "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css";
+
+html {
+    height: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    animation: gradient 6s ease alternate infinite;
+    background: linear-gradient(-45deg, #65a0fa, #3075f5, #23a6d5, #23d5ab) no-repeat;
+    background-size: 300% 300%;
+    font-family: Nunito, sans-serif;
+    color: white;
+    font-size: 200%;
+    user-select: none;
+    -webkit-user-select: none;
+    position: relative;
+    background-attachment: fixed;
+    height: 100%;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+@keyframes gradient {
+    from {
+        background-position: 0 50%;
+    }
+    to {
+        background-position: 100% 50%;
+    }
+}
+
+.container {
+    height: 70%;
+    width: 20%;
+    background-color: rgb(255, 72, 72);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 20px;
+    box-shadow: 2px 3px 10px -1px rgba(0, 0, 0, 1);
+    padding-left: 40px;
+
+    h1 {
+        border-bottom: 6px solid white;
+        width: 280px;
+        margin-bottom: 30px;
+        padding: 13px 0 5px 0;
+    }
+    p {
+        font-size: 20px;
+    }
+}
+
+.btn {
+    border: none;
+    background-color: white;
+    width: 100px;
+    height: 40px;
+    color: rgb(255, 72, 72);
+    font-size: 17px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.textbox {
+    width: 70%;
+    overflow: hidden;
+    padding: 8px 0 2px 0;
+    margin: 8px 0;
+    border-bottom: 2px solid white;
+
+    input {
+        border: none;
+        outline: none;
+        background: none;
+        color: white;
+        font-size: 20px;
+        float: left;
+        margin: 10px;
+        margin-left: 25px;
+        margin-bottom: 10px;
+    }
+}
+
+.mostrar {
+    font-size: 12px;
+}
+
+.icon {
+    float: left;
+    text-align: center;
+    margin-top: 6px;
+    position: absolute;
+    width: 10px;
+}
+
+input[type="checkbox"]:checked {
+    color: red;
+    border: solid pink;
+}
+
+::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.938);
+}
+
+::-ms-reveal {
+    display: none;
+}
+
+.svg-inline--fa.fa-w-14 {
+    width: 0.575em;
+}
+
+.svg-inline--fa.fa-w-16 {
+    width: 0.575em;
+}
