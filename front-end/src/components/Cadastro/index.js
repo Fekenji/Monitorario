@@ -27,7 +27,7 @@ export default class Cadastro extends Component {
             </div>
             <div className="textbox">
                 <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                <input type="text" name="" placeholder="E-mail" id="" />
+                <input type="email" name="" placeholder="E-mail" id="" />
             </div>
             <div className="textbox">
                 <FontAwesomeIcon icon={faBook} className="icon" />
