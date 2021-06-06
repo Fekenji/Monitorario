@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import Horarios from '../Horarios';
 
 import './Login.scss';
 
-export default class Login extends Component {
-    mostrarSenha() {
+const Login = () => {
+    const [emailUsuario, setEmail] = useState("");
+    const [senhaUsuario, setPassword] = useState("");
+    const [user, setUser] = useState();
+    const [erro, setErro] = useState('');
+
+    function mostrarSenha() {
         var x = document.getElementById("senha");
 
         if (x.type === "password") {
@@ -16,28 +22,81 @@ export default class Login extends Component {
         }
     }
 
-    render() {
-        return(
-            <div className="container has-shown">
-            <h1>Login</h1>
-            <div className="textbox">
-                <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                <input type="email" name="" placeholder="E-mail" id="" />
-            </div>
-            <div className="textbox">
-                <FontAwesomeIcon icon={faLock} className="icon" />
-                <input type="password" name="" placeholder="Senha" id="senha" pattern="cc[1-9]{5}@g.unicamp.br"/>
-            </div>
-            <div className="mostrar">
-                <input type="checkbox" onClick={this.mostrarSenha} id="mostrar" /> <span className="txt">Mostrar Senha</span>
-                <span className="checkmark"></span>
-            </div>
-            <p>
-                Não tem conta?
-            <Link to="/signup"> <b>Cadastre-se!</b></Link>
-            </p>
-            <input className="btn" type="button" value="Entrar" />
+    const handleSubmit = async e => {
+        e.preventDefault();
+
+        var raUsuario = emailUsuario.substring(2, 7);
+        const userForm = { raUsuario, senhaUsuario };
+
+        await fetch(`http://localhost:5000/api/usuario/login`, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userForm)
+        })
+            .then(
+                resp => {
+                    if (resp.ok) {
+                        //console.log(resp.json());
+                        resp.json().then((data) => {
+                            console.log(data);
+                            // set the state of the user
+                            setUser(data);
+                            // store the user in localStorage
+                            localStorage.setItem('user', data);
+                            //console.log(data)
+                        })
+                    }
+                    else {
+                        console.log('Usuário inexistente ou servidor off-line.');
+                        setErro("Usuário inexistente ou servidor off-line.");
+                    }
+                })
+            .catch(function (error) {
+                console.log('There has been a problem with your fetch operation: ' + error.message);
+            })
+    }
+
+    if (user) {
+        return (
+            <Horarios />
+        )
+    }
+
+    return (
+        <div className="container has-shown">
+            <form onSubmit={handleSubmit}>
+                <h1>Login</h1>
+                <div className="textbox">
+                    <FontAwesomeIcon icon={faEnvelope} className="icon" />
+                    <input type="email" value={emailUsuario} onChange={({ target }) => setEmail(target.value)} name="" placeholder="E-mail" id="" pattern=".+@g.unicamp.br" />
+                </div>
+                <div className="textbox">
+                    <FontAwesomeIcon icon={faLock} className="icon" />
+                    <input type="password" value={senhaUsuario} onChange={({ target }) => setPassword(target.value)} name="" placeholder="Senha" id="senha" />
+                </div>
+                <div className="mostrar">
+                    <input type="checkbox" onClick={mostrarSenha} id="mostrar" /> <span className="txt">Mostrar Senha</span>
+                    <span className="checkmark"></span>
+                </div>
+                <p>
+                    Não tem conta?
+                    <Link to="/signup"> <b>Cadastre-se!</b></Link>
+                </p>
+                <input className="btn" type="submit" value="Entrar" />
+                <br />
+                {
+                    erro ?
+                        <div>
+                            <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro"/>
+                            <div className="erro">
+                            <h4 className="msgErro">   {erro}</h4></div></div> :
+                        <h4 className="msgErro">{erro}</h4>}
+            </form>
         </div>
-        );
-    };
-}
+    );
+};
+
+export default Login;

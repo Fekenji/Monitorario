@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Simbolo from '../../assets/imagens/simbolo.png';
 import aos from 'aos';
 
+import Rodape from '../Rodape';
 import '../../aos/aos.css';
 import './Home.scss';
 
@@ -92,9 +93,7 @@ export default class Home extends Component {
                                     />
                                 </svg>
                             </a>
-                            <div className="rodape">
-                                <footer>&copy; 2021 Copyright - Monitorário</footer>
-                            </div>
+                            <Rodape />
                         </div>
                     </div>
                 </div>

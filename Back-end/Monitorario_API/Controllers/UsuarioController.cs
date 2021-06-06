@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Monitorario_API.Data;
 using Monitorario_API.Models;
+using Microsoft.AspNetCore.Authorization;
+using Monitorario_API.Services;
 
 namespace Monitorario_API.Controllers
 {
@@ -42,25 +44,72 @@ namespace Monitorario_API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("anonymous")]
+        [AllowAnonymous]
+        public string Anonymous() => "Anônimo";
+
+        [HttpGet]
+        [Route("authenticated")]
+        [Authorize]
+        public string Authenticated() => string.Format("Autenticado - {0}", User.Identity.Name);
+
+
         [HttpPost]
-        public async Task<ActionResult> post(Usuario model)
+        [Route("login")]
+        [AllowAnonymous]
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody] Usuario usuario)
         {
             try
             {
-                _context.Usuario.Add(model);
-                if (await _context.SaveChangesAsync() == 1)
+                var user = _context.Usuario.Where(u => u.RaUsuario == usuario.RaUsuario && u.SenhaUsuario == usuario.SenhaUsuario).FirstOrDefault();
+
+                if (user == null)
+                    return NotFound(new { message = usuario });
+
+                var token = TokenServices.GenerateToken(user);
+                user.SenhaUsuario = "";
+                return new
                 {
-                    //return Ok();
-                    return Created($"/api/usuario/{model.RaUsuario}", model);
-                }
+                    user = user,
+                    token = token
+                };
             }
             catch
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados.");
             }
-            // retorna BadRequest se não conseguiu incluir
-            return BadRequest();
         }
+
+        [HttpPost]
+        [Route("signup")]
+        public async Task<ActionResult> Post(Usuario model)
+        {
+            try
+            {
+                _context.Usuario.Add(model);
+                if (await _context.SaveChangesAsync() == 1)
+                    return Created($"api/usuario/{model.RaUsuario}", model);
+            }
+            catch
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Falha no acesso ao banco de dados");
+            }
+
+            return BadRequest();
+
+            // if(ModelState.IsValid)
+            // {
+            //     _context.Aluno.Add(model);
+            //     await _context.SaveChangesAsync();
+            //     return Created($"api/aluno/{model.RA}", model);
+            // }
+            // else
+            // {
+            //     return BadRequest(ModelState);
+            // }
+        }
+
 
         [HttpPut("{UsuarioRA}")]
         public async Task<IActionResult> put(string UsuarioRa, Usuario dadosUsuarioAlt)
