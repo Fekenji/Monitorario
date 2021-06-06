@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import Horarios from '../Horarios';
+import { useRa, useRaUpdate } from '../../MainContext';
 
 import './Login.scss';
 
 const Login = () => {
+    const ra = useRa()
+    const raUpdate = useRaUpdate()
     const [emailUsuario, setEmail] = useState("");
     const [senhaUsuario, setPassword] = useState("");
     const [user, setUser] = useState();
     const [erro, setErro] = useState('');
-
+    
+    if (ra) {
+        return (
+            <Redirect to='/horarios' />
+        ) 
+    }
     function mostrarSenha() {
         var x = document.getElementById("senha");
 
@@ -47,6 +54,7 @@ const Login = () => {
                             // store the user in localStorage
                             localStorage.setItem('user', data);
                             //console.log(data)
+                            raUpdate(raUsuario);
                         })
                     }
                     else {
@@ -61,7 +69,7 @@ const Login = () => {
 
     if (user) {
         return (
-            <Horarios />
+            <Redirect to='/horarios' />
         )
     }
 

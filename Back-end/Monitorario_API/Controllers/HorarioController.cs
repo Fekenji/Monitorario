@@ -73,7 +73,6 @@ namespace Monitorario_API.Controllers
                 {
                     return BadRequest();
                 }
-                result.IdHorario = dadosHorarioAlt.IdHorario;
                 result.Materia = dadosHorarioAlt.Materia;
                 result.RaMonitor = dadosHorarioAlt.RaMonitor;
                 result.IsReservado = dadosHorarioAlt.IsReservado;
@@ -81,7 +80,7 @@ namespace Monitorario_API.Controllers
                 result.DiaSemana = dadosHorarioAlt.DiaSemana;
 
                 await _context.SaveChangesAsync();
-                return NoContent();
+                return Ok();
             }
             catch
             {

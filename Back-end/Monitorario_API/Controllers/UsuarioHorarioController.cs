@@ -73,7 +73,6 @@ namespace Monitorario_API.Controllers
                 {
                     return BadRequest();
                 }
-                result.IdUsuarioHorario = dadosUsuarioHorarioAlt.IdUsuarioHorario;
                 result.IdHorario = dadosUsuarioHorarioAlt.IdHorario;
                 result.RaUsuario = dadosUsuarioHorarioAlt.RaUsuario;
 

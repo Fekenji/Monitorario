@@ -5,7 +5,7 @@ export default class Rodape extends Component {
     render() {
         return (
             <div className="rodape">
-                <footer>&copy; @2021 Copyright - Monitorário</footer>
+                <footer>&copy; 2021 Copyright - Monitorário</footer>
             </div>
         )
     }

@@ -1,12 +1,14 @@
 import React, { Component, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEnvelope, faBook, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import Horarios from '../Horarios';
+import { useRa, useRaUpdate } from '../../MainContext';
 
 import './Cadastro.scss';
 
 const Cadastro = () => {
+    const ra = useRa()
+    const raUpdate = useRaUpdate()
     const [raUsuario, setRa] = useState('');
     const [emailUsuario, setEmail] = useState('');
     const [senhaUsuario, setPassword] = useState('');
@@ -14,6 +16,12 @@ const Cadastro = () => {
     const [isMonitor, setIsMonitor] = useState('');
     const [user, setUser] = useState();
     const [erro, setErro] = useState('');
+
+    if (ra) {
+        return (
+            <Redirect to='/horarios' />
+        ) 
+    }
 
     function mostrarSenha() {
         var x = document.getElementById("senha");
@@ -30,8 +38,6 @@ const Cadastro = () => {
         var cursoUsuario = Number.parseInt(cursaUsuario);
         
         const userForm = { raUsuario, emailUsuario, senhaUsuario, cursoUsuario, isMonitor };
-        console.log(userForm);
-        alert(JSON.stringify(userForm));
         await fetch(`http://localhost:5000/api/usuario/signup`, {
             method: "POST",
             headers: {
@@ -50,6 +56,7 @@ const Cadastro = () => {
                             setUser(data);
                             // store the user in localStorage
                             localStorage.setItem('user', data);
+                            raUpdate(raUsuario);
                             //console.log(data)
                         })
                     }
@@ -65,7 +72,7 @@ const Cadastro = () => {
 
     if (user) {
         return (
-            <Horarios />
+            <Redirect to='/horarios' />
         )
     }
 
@@ -83,7 +90,7 @@ const Cadastro = () => {
                 </div>
                 <div className="textbox">
                     <FontAwesomeIcon icon={faBook} className="icon" />
-                    <select value={cursaUsuario} onChange={({ target }) => { setCurso(target.value); console.log(cursaUsuario) }} >
+                    <select value={cursaUsuario} onChange={({ target }) => { setCurso(target.value) }} >
                         <option value="curso" selected hidden>Curso</option>
                         <option value="16">16 - Alimentos Integrado ao Ensino Médio (Diurno)</option>
                         <option value="17">17 - Eletroeletrônica Integrado ao Ensino Médio (Diurno)</option>
