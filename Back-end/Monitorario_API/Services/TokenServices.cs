@@ -19,7 +19,6 @@ namespace Monitorario_API.Services
             {
                 new Claim(ClaimTypes.Name, user.RaUsuario.ToString()),
                 new Claim(ClaimTypes.Role, user.IsMonitor.ToString()),
-                new Claim(ClaimTypes.Email, user.EmailUsuario.ToString())
             }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

@@ -123,7 +123,6 @@ namespace Monitorario_API.Controllers
                     return BadRequest();
                 }
                 result.RaUsuario = dadosUsuarioAlt.RaUsuario;
-                result.EmailUsuario = dadosUsuarioAlt.EmailUsuario;
                 result.SenhaUsuario = dadosUsuarioAlt.SenhaUsuario;
                 result.CursoUsuario = dadosUsuarioAlt.CursoUsuario;
                 result.IsMonitor = dadosUsuarioAlt.IsMonitor;

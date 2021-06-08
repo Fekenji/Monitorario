@@ -1,27 +1,27 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEnvelope, faBook, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { useRa, useRaUpdate } from '../../MainContext';
+import { connect } from 'react-redux';
 
 import './Cadastro.scss';
 
-const Cadastro = () => {
-    const ra = useRa()
-    const raUpdate = useRaUpdate()
+function toggleRa(modules) {
+    return {
+        type: 'LOGIN',
+        modules
+    }
+}
+
+const Cadastro = ({ modules, dispatch }) => {
+    const ra = modules.raUsuario
     const [raUsuario, setRa] = useState('');
-    const [emailUsuario, setEmail] = useState('');
     const [senhaUsuario, setPassword] = useState('');
     const [cursaUsuario, setCurso] = useState('');
     const [isMonitor, setIsMonitor] = useState('');
     const [user, setUser] = useState();
     const [erro, setErro] = useState('');
-
-    if (ra) {
-        return (
-            <Redirect to='/horarios' />
-        ) 
-    }
 
     function mostrarSenha() {
         var x = document.getElementById("senha");
@@ -37,7 +37,8 @@ const Cadastro = () => {
         const isMonitor = false;
         var cursoUsuario = Number.parseInt(cursaUsuario);
         
-        const userForm = { raUsuario, emailUsuario, senhaUsuario, cursoUsuario, isMonitor };
+        const userForm = { raUsuario, senhaUsuario, cursoUsuario, isMonitor };
+        console.log(JSON.stringify(userForm))
         await fetch(`http://localhost:5000/api/usuario/signup`, {
             method: "POST",
             headers: {
@@ -56,8 +57,8 @@ const Cadastro = () => {
                             setUser(data);
                             // store the user in localStorage
                             localStorage.setItem('user', data);
-                            raUpdate(raUsuario);
                             //console.log(data)
+                            (() => dispatch(toggleRa({raUsuario: raUsuario})))()
                         })
                     }
                     else {
@@ -70,12 +71,6 @@ const Cadastro = () => {
             })
     }
 
-    if (user) {
-        return (
-            <Redirect to='/horarios' />
-        )
-    }
-
     return (
         <div className="container has-shown">
             <h1>Cadastro</h1>
@@ -83,10 +78,6 @@ const Cadastro = () => {
                 <div className="textbox">
                     <FontAwesomeIcon icon={faUser} className="icon" />
                     <input type="text" placeholder="Seu RA" value={raUsuario} onChange={({ target }) => setRa(target.value)} />
-                </div>
-                <div className="textbox">
-                    <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                    <input type="email" placeholder="E-mail" pattern=".+@g.unicamp.br" value={emailUsuario} onChange={({ target }) => setEmail(target.value)} />
                 </div>
                 <div className="textbox">
                     <FontAwesomeIcon icon={faBook} className="icon" />
@@ -132,7 +123,7 @@ const Cadastro = () => {
                     Já tem uma conta?
                 <Link to="/login"> <b>Faça seu login!</b></Link>
                 </p>
-                <input className="btn" type="submit" value="Registrar" />
+                <input className="botaoCadastro" type="submit" value="Registrar" />
                 {
                     erro ?
                         <div>
@@ -144,4 +135,4 @@ const Cadastro = () => {
         </div>
     )
 }
-export default Cadastro;
+export default connect(state => ({ modules: state.modules }))(Cadastro);

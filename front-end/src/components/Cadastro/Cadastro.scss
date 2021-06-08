@@ -35,7 +35,7 @@ a {
 }
 
 .has-shown {
-    animation: has-shown 2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+    animation: has-shown 1s cubic-bezier(0.85, 0, 0.15, 1) forwards;
 }
 
 @keyframes gradient {
@@ -48,7 +48,7 @@ a {
 }
 
 .container {
-    height: 75%;
+    height: 69%;
     width: 20%;
     background-color: rgb(255, 72, 72);
     position: absolute;
@@ -72,10 +72,10 @@ a {
     }
 }
 
-.btn {
+.botaoCadastro {
     border: none;
     background-color: white;
-    width: 100px;
+    width: 30%;
     height: 40px;
     color: rgb(255, 72, 72);
     font-size: 17px;

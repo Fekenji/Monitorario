@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import './Horarios.scss';
 import Rodape from '../Rodape';
 import Simbolo from '../../assets/imagens/simbolo.png';
-import Ra from '../Ra';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default class Horarios extends Component {
-
+class Horarios extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,7 +37,6 @@ export default class Horarios extends Component {
 
                 });
             },
-
                 (error) => {
                     this.setState({ error });
                 }
@@ -47,7 +45,7 @@ export default class Horarios extends Component {
 
     marcar = (hora) => {
         var idHorario = hora.idHorario;
-        var raUsuario = document.getElementById("ra").innerHTML;
+        var raUsuario = this.props.modules.raUsuario;
         var userForm = { raUsuario, idHorario }
         var apiUrl = 'http://localhost:5000/api/usuarioHorario'
         fetch(apiUrl, {
@@ -60,13 +58,7 @@ export default class Horarios extends Component {
         })
             .then(
                 resp => {
-                    if (resp.ok) {
-                        //console.log(resp.json());
-                        resp.json().then((data) => {
-                            //console.log(data)
-                        })
-                    }
-                    else {
+                    if (!resp.ok) {
                         console.log('Usuário inexistente ou servidor off-line.');
                     }
                 })
@@ -80,7 +72,7 @@ export default class Horarios extends Component {
         var diaSemana = hora.diaSemana;
         var raMonitor = hora.raMonitor;
         userForm = { idHorario, materia, isReservado, horario, diaSemana, raMonitor }
-        console.log(JSON.stringify(userForm));
+
         apiUrl = `http://localhost:5000/api/horario/${idHorario}`;
         fetch(apiUrl, {
             method: "PUT",
@@ -111,14 +103,16 @@ export default class Horarios extends Component {
 
         document.getElementById(hora.idHorario + "btn").remove();
         document.getElementById(hora.idHorario).classList.add("reservado");
-        alert(`Horário reservado com sucesso! ${hora.diaSemana} às ${hora.horario}, matéria: ${hora.materia}`);
+        alert(`Horário reservado com sucesso! ${hora.diaSemana} às ${hora.horario.substring(11, 16)}, matéria: ${hora.materia}`);
     }
 
     render() {
         return (
-            <div className="">
-                <div className="">
-                    <Ra></Ra>
+            <div>
+                <div className="menu">
+                    <span><Link to="/">Início</Link></span>
+                    <span><Link to="/agendamentos">Meus agendamentos</Link></span>
+                    <span><Link to="/logoff">Logoff</Link></span>
                 </div>
                 <img src={Simbolo} alt="Monitorário" id="img" />
                 <div className="aux"><Rodape /></div>
@@ -131,14 +125,14 @@ export default class Horarios extends Component {
                             <tbody>
                                 <tr className="linhaTabela">
                                     <td className="horario semana" style={{ textAlign: "center" }}>#</td>
-                                    <td className="semana">Segunda</td>
-                                    <td className="semana">Terça</td>
-                                    <td className="semana">Quarta</td>
-                                    <td className="semana">Quinta</td>
-                                    <td className="semana">Sexta</td>
+                                    <th className="semana">Segunda</th>
+                                    <th className="semana">Terça</th>
+                                    <th className="semana">Quarta</th>
+                                    <th className="semana">Quinta</th>
+                                    <th className="semana">Sexta</th>
                                 </tr>
                                 <tr className="linhaTabela">
-                                    <td className="horario">7:30</td>
+                                    <td className="horario">07:30</td>
                                     <td id="seg 07:30"></td>
                                     <td id="ter 07:30"></td>
                                     <td id="qua 07:30"></td>
@@ -146,7 +140,7 @@ export default class Horarios extends Component {
                                     <td id="sex 07:30"></td>
                                 </tr>
                                 <tr className="linhaTabela">
-                                    <td className="horario">8:20</td>
+                                    <td className="horario">08:20</td>
                                     <td id="seg 08:20"></td>
                                     <td id="ter 08:20"></td>
                                     <td id="qua 08:20"></td>
@@ -154,7 +148,7 @@ export default class Horarios extends Component {
                                     <td id="sex 08:20"></td>
                                 </tr>
                                 <tr className="linhaTabela">
-                                    <td className="horario">9:10</td>
+                                    <td className="horario">09:10</td>
                                     <td id="seg 09:10"></td>
                                     <td id="ter 09:10"></td>
                                     <td id="qua 09:10"></td>
@@ -195,91 +189,91 @@ export default class Horarios extends Component {
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">13:50</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 13:50"></td>
+                                    <td id="ter 13:50"></td>
+                                    <td id="qua 13:50"></td>
+                                    <td id="qui 13:50"></td>
+                                    <td id="sex 13:50"></td>
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">14:40</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 14:40"></td>
+                                    <td id="ter 14:40"></td>
+                                    <td id="qua 14:40"></td>
+                                    <td id="qui 14:40"></td>
+                                    <td id="sex 14:40"></td>
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">15:45</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 15:45"></td>
+                                    <td id="ter 15:45"></td>
+                                    <td id="qua 15:45"></td>
+                                    <td id="qui 15:45"></td>
+                                    <td id="sex 15:45"></td>
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">16:35</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 16:35"></td>
+                                    <td id="ter 16:35"></td>
+                                    <td id="qua 16:35"></td>
+                                    <td id="qui 16:35"></td>
+                                    <td id="sex 16:35"></td>
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">17:25</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 17:25"></td>
+                                    <td id="ter 17:25"></td>
+                                    <td id="qua 17:25"></td>
+                                    <td id="qui 17:25"></td>
+                                    <td id="sex 17:25"></td>
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">18:15</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 18:15"></td>
+                                    <td id="ter 18:15"></td>
+                                    <td id="qua 18:15"></td>
+                                    <td id="qui 18:15"></td>
+                                    <td id="sex 18:15"></td>
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">19:00</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 19:00"></td>
+                                    <td id="ter 19:00"></td>
+                                    <td id="qua 19:00"></td>
+                                    <td id="qui 19:00"></td>
+                                    <td id="sex 19:00"></td>
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">19:40</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 19:40"></td>
+                                    <td id="ter 19:40"></td>
+                                    <td id="qua 19:40"></td>
+                                    <td id="qui 19:40"></td>
+                                    <td id="sex 19:40"></td>
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">20:20</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 20:20"></td>
+                                    <td id="ter 20:20"></td>
+                                    <td id="qua 20:20"></td>
+                                    <td id="qui 20:20"></td>
+                                    <td id="sex 20:20"></td>
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">21:10</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 21:10"></td>
+                                    <td id="ter 21:10"></td>
+                                    <td id="qua 21:10"></td>
+                                    <td id="qui 21:10"></td>
+                                    <td id="sex 21:10"></td>
                                 </tr>
                                 <tr className="linhaTabela">
                                     <td className="horario">21:50</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td id="seg 21:50"></td>
+                                    <td id="ter 21:50"></td>
+                                    <td id="qua 21:50"></td>
+                                    <td id="qui 21:50"></td>
+                                    <td id="sex 21:50"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -290,3 +284,11 @@ export default class Horarios extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return { modules: state.modules }
+}
+
+const mapDispatchToProps = {}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Horarios);

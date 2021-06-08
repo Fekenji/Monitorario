@@ -6,7 +6,9 @@ namespace Monitorario_API.Models
     {
         [Key]
         public int IdUsuarioHorario { get; set; }
+
         public string RaUsuario { get; set; }
+
         public int IdHorario { get; set; }
     }
 }

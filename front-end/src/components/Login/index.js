@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { useRa, useRaUpdate } from '../../MainContext';
+import { faUser, faEnvelope, faLock, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
 
 import './Login.scss';
 
-const Login = () => {
-    const ra = useRa()
-    const raUpdate = useRaUpdate()
-    const [emailUsuario, setEmail] = useState("");
+function toggleRa(modules) {
+    return {
+        type: 'LOGIN',
+        modules
+    }
+}
+
+const Login = ({ modules, dispatch }) => {
+    const ra = modules.raUsuario
+    const [raUsuario, setRa] = useState("");
     const [senhaUsuario, setPassword] = useState("");
     const [user, setUser] = useState();
     const [erro, setErro] = useState('');
-    
-    if (ra) {
-        return (
-            <Redirect to='/horarios' />
-        ) 
-    }
+
     function mostrarSenha() {
         var x = document.getElementById("senha");
 
@@ -31,8 +32,6 @@ const Login = () => {
 
     const handleSubmit = async e => {
         e.preventDefault();
-
-        var raUsuario = emailUsuario.substring(2, 7);
         const userForm = { raUsuario, senhaUsuario };
 
         await fetch(`http://localhost:5000/api/usuario/login`, {
@@ -54,7 +53,8 @@ const Login = () => {
                             // store the user in localStorage
                             localStorage.setItem('user', data);
                             //console.log(data)
-                            raUpdate(raUsuario);
+
+                            (() => dispatch(toggleRa({raUsuario: raUsuario})))()
                         })
                     }
                     else {
@@ -67,23 +67,17 @@ const Login = () => {
             })
     }
 
-    if (user) {
-        return (
-            <Redirect to='/horarios' />
-        )
-    }
-
     return (
         <div className="container has-shown">
             <form onSubmit={handleSubmit}>
                 <h1>Login</h1>
                 <div className="textbox">
-                    <FontAwesomeIcon icon={faEnvelope} className="icon" />
-                    <input type="email" value={emailUsuario} onChange={({ target }) => setEmail(target.value)} name="" placeholder="E-mail" id="" pattern=".+@g.unicamp.br" />
+                    <FontAwesomeIcon icon={faUser} className="icon" />
+                    <input type="text" value={raUsuario} onChange={({ target }) => setRa(target.value)} placeholder="Seu RA" title="Digite um RA com 5 números" pattern="[0-9]{5}" required />
                 </div>
                 <div className="textbox">
                     <FontAwesomeIcon icon={faLock} className="icon" />
-                    <input type="password" value={senhaUsuario} onChange={({ target }) => setPassword(target.value)} name="" placeholder="Senha" id="senha" />
+                    <input type="password" value={senhaUsuario} onChange={({ target }) => setPassword(target.value)} placeholder="Senha" id="senha" required />
                 </div>
                 <div className="mostrar">
                     <input type="checkbox" onClick={mostrarSenha} id="mostrar" /> <span className="txt">Mostrar Senha</span>
@@ -93,18 +87,18 @@ const Login = () => {
                     Não tem conta?
                     <Link to="/signup"> <b>Cadastre-se!</b></Link>
                 </p>
-                <input className="btn" type="submit" value="Entrar" />
+                <input className="botao" type="submit" value="Entrar" />
                 <br />
                 {
                     erro ?
                         <div>
-                            <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro"/>
+                            <FontAwesomeIcon icon={faExclamationTriangle} className="iconErro" />
                             <div className="erro">
-                            <h4 className="msgErro">   {erro}</h4></div></div> :
+                                <h4 className="msgErro">   {erro}</h4></div></div> :
                         <h4 className="msgErro">{erro}</h4>}
             </form>
         </div>
     );
 };
 
-export default Login;
+export default connect(state => ({ modules: state.modules }))(Login);

@@ -9,10 +9,6 @@ namespace Monitorario_API.Models
         // [StringLength(5, ErrorMessage = "O RA deve conter 5 caracteres")]
         public string RaUsuario { get; set; }
 
-        // [Required(ErrorMessage = "O campo EmailUsuario é obrigatório")]//cc20134@g.unicamp.br
-        // [StringLength(20, ErrorMessage = "O email deve conter 20 caracteres")]
-        public string EmailUsuario { get; set; }
-
         // [Required(ErrorMessage = "O campo SenhaUsuario é obrigatório")]
         // [MaxLength(64, ErrorMessage = "O campo senha deve ter entre 8 e 64 caracteres")]
         // [MinLength(8, ErrorMessage = "O campo senha deve ter entre 8 e 64 caracteres")]
