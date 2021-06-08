@@ -8,7 +8,6 @@ const INITIAL_STATE = {
 
 function reducer(state = INITIAL_STATE, action) {
     if (action.type === 'LOGIN') {
-        console.log(action)
         return { modules: action.modules }
     }
 

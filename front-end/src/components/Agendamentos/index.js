@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Agendamentos from '../Agendamentos';
 import './Agendamentos.scss';
 
 import Rodape from '../Rodape';
@@ -15,10 +14,10 @@ const stateInicial = {
     usuarioHorario: { idUsuarioHorario: 0, raUsuario: '', idHorario: 0 },
     dadosUsuariosHorarios: [],
     horario: {
-        idHorario: 0, 
-        materia: '', 
-        isReservado: false, 
-        horario: '', 
+        idHorario: 0,
+        materia: '',
+        isReservado: false,
+        horario: '',
         diaSemana: '',
         raMonitor: ''
     },
@@ -34,7 +33,6 @@ class Agendamento extends Component {
             .then(
                 (result) => {
                     result.some((r) => {
-                        console.log(apiUrlHorario + r.idHorario);
                         fetch(apiUrlHorario + r.idHorario)
                             .then(res => res.json())
                             .then(
@@ -52,8 +50,6 @@ class Agendamento extends Component {
                     this.setState({
                         dadosUsuariosHorarios: result
                     });
-                    
-                    console.log("Função didMount:" + result);
                 },
                 (error) => {
                     this.setState({ error });
@@ -76,19 +72,18 @@ class Agendamento extends Component {
                 <div className="content has-shown">
                     <h1 className="titulo"><b>Meus agendamentos</b></h1>
                     {
-                        console.log(this.state.dadosUsuariosHorarios)}{
                         this.state.dadosUsuariosHorarios.map(
                             (usuarioHorario) => (
                                 this.state.dadosHorarios.map(
                                     (horario) => (
                                         usuarioHorario.raUsuario == this.props.modules.raUsuario && usuarioHorario.idHorario === horario.idHorario ?
-                                            <Agendado idUsuarioHorario={usuarioHorario.idUsuarioHorario} horario={horario} /> : null
+                                            (<Agendado idUsuarioHorario={usuarioHorario.idUsuarioHorario} horario={horario} />) : null
                                     )
                                 )
                             )
                         )
                     }
-
+                    <small className="nenhuma">Nenhuma monitoria agendada ainda!</small>
                 </div>
             </div>
         );

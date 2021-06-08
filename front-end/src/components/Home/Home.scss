@@ -72,6 +72,11 @@ body {
     }
 }
 
+.logado {
+    position: absolute;
+    top: 20px;
+}
+
 .l-main {
     display: flex;
     height: 100vh;
@@ -103,7 +108,7 @@ a {
 }
 
 .has-shown {
-    animation: has-shown 2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+    animation: has-shown 1s cubic-bezier(0.85, 0, 0.15, 1) forwards;
 }
 
 .c-button {

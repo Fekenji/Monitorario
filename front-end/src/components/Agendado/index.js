@@ -20,15 +20,6 @@ export default class Agendado extends Component {
                 'Content-Type': 'application/json'
             },
         })
-            .then(
-                resp => {
-                    if (!resp.ok) {
-                        console.log('Usuário inexistente ou servidor off-line.');
-                    }
-                })
-            .catch(function (error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
-            })
 
         var idHorario = this.props.horario.idHorario
         var materia = this.props.horario.materia;
@@ -49,15 +40,6 @@ export default class Agendado extends Component {
             },
             body: JSON.stringify(userForm)
         })
-            .then(
-                resp => {
-                    if (!resp.ok) {
-                        console.log('Usuário inexistente ou servidor off-line.');
-                    }
-                })
-            .catch(function (error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
-            })
 
         this.setState({ desmarcou: true })
     }
@@ -67,7 +49,6 @@ export default class Agendado extends Component {
             return <div></div>
         } else {
             return (
-
                 <div className="caixa">
                     <h1>{this.props.horario.materia}</h1>
                     <small>{this.props.horario.diaSemana} às {this.props.horario.horario.substring(11, 16)}</small>

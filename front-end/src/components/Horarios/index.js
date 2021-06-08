@@ -34,7 +34,6 @@ class Horarios extends Component {
                             document.getElementById(horario.idHorario + "btn").addEventListener('click', () => this.marcar(horario), true)
                         }
                     }
-
                 });
             },
                 (error) => {
@@ -56,15 +55,6 @@ class Horarios extends Component {
             },
             body: JSON.stringify(userForm)
         })
-            .then(
-                resp => {
-                    if (!resp.ok) {
-                        console.log('Usuário inexistente ou servidor off-line.');
-                    }
-                })
-            .catch(function (error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
-            })
 
         var materia = hora.materia;
         var isReservado = true;
@@ -84,22 +74,6 @@ class Horarios extends Component {
             },
             body: JSON.stringify(userForm)
         })
-            .then(
-                resp => {
-                    if (resp.ok) {
-                        //console.log(resp.json());
-                        resp.json().then((data) => {
-                            //console.log(data);
-                            //console.log(data)
-                        })
-                    }
-                    else {
-                        console.log('Usuário inexistente ou servidor off-line.');
-                    }
-                })
-            .catch(function (error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
-            })
 
         document.getElementById(hora.idHorario + "btn").remove();
         document.getElementById(hora.idHorario).classList.add("reservado");
@@ -112,6 +86,7 @@ class Horarios extends Component {
                 <div className="menu">
                     <span><Link to="/">Início</Link></span>
                     <span><Link to="/agendamentos">Meus agendamentos</Link></span>
+                    <span><Link to="/alterar">Alterar senha</Link></span>
                     <span><Link to="/logoff">Logoff</Link></span>
                 </div>
                 <img src={Simbolo} alt="Monitorário" id="img" />

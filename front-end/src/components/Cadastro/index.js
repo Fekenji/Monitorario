@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faEnvelope, faBook, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { useRa, useRaUpdate } from '../../MainContext';
+import { faUser, faLock, faBook, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 
 import './Cadastro.scss';
@@ -36,9 +35,8 @@ const Cadastro = ({ modules, dispatch }) => {
         e.preventDefault();
         const isMonitor = false;
         var cursoUsuario = Number.parseInt(cursaUsuario);
-        
+
         const userForm = { raUsuario, senhaUsuario, cursoUsuario, isMonitor };
-        console.log(JSON.stringify(userForm))
         await fetch(`http://localhost:5000/api/usuario/signup`, {
             method: "POST",
             headers: {
@@ -50,25 +48,17 @@ const Cadastro = ({ modules, dispatch }) => {
             .then(
                 resp => {
                     if (resp.ok) {
-                        //console.log(resp.json());
                         resp.json().then((data) => {
-                            console.log(data);
-                            // set the state of the user
                             setUser(data);
-                            // store the user in localStorage
+
                             localStorage.setItem('user', data);
-                            //console.log(data)
-                            (() => dispatch(toggleRa({raUsuario: raUsuario})))()
+                            (() => dispatch(toggleRa({ raUsuario: raUsuario })))()
                         })
                     }
                     else {
-                        console.log('Usuário inexistente ou servidor off-line.');
                         setErro("Usuário inexistente ou servidor off-line.");
                     }
                 })
-            .catch(function (error) {
-                console.log('There has been a problem with your fetch operation: ' + error.message);
-            })
     }
 
     return (

@@ -128,7 +128,7 @@ namespace Monitorario_API.Controllers
                 result.IsMonitor = dadosUsuarioAlt.IsMonitor;
 
                 await _context.SaveChangesAsync();
-                return NoContent();
+                return Ok();
             }
             catch
             {

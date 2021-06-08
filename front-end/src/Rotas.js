@@ -8,6 +8,7 @@ import Horarios from './components/Horarios';
 import Agendamentos from './components/Agendamentos';
 import Logoff from './components/Logoff';
 import { connect } from 'react-redux';
+import Alterar from './components/Alterar';
 
 class Rotas extends Component {
     render() {
@@ -33,6 +34,11 @@ class Rotas extends Component {
                 { this.props.modules.raUsuario ?
                     <Route path="/agendamentos" component={Agendamentos} /> :
                     <Route path="/agendamentos" component={Login} />
+                }
+
+                { this.props.modules.raUsuario ?
+                    <Route path="/alterar" component={Alterar} /> :
+                    <Route path="/alterar" component={Login} />
                 }
 
                 <Route path="/logoff" component={Logoff} />

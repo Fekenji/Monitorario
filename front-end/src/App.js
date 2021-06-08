@@ -11,9 +11,7 @@ function App() {
       <Provider store={store}>
         <MainProvider>
           <BrowserRouter>
-            <div>
               <Rotas />
-            </div>
           </BrowserRouter>
         </MainProvider>
       </Provider>
